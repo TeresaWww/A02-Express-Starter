@@ -9,12 +9,13 @@
   "dependencies": {
     "cookie-parser": "^1.0.0",
     "debug": "~2.6.9",
-    "express": "^4.21.0",
-    "morgan": "^1.10.1"
+    "express": "^4.21.2",
+    "morgan": "^1.10.1",
+    "node-fetch": "^3.3.2",
+    "node-html-parser": "^7.0.1"
   },
   "description": "This is a starter project for Express. It was created with the express project generator and then modified to be a module type (uses imports instead of requires, based on this tutorial), and with VSCode launch settings.",
   "main": "app.js",
-  "devDependencies": {},
   "author": "",
   "license": "ISC"
 }
