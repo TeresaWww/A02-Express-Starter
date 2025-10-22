@@ -4,6 +4,16 @@ import {parse} from "node-html-parser";
 
 const router = express.Router();
 
+const escapeHTML = str => String(str).replace(/[&<>'"]/g, 
+  tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag]));
+
+
 router.get("/", (req, res) => {
     res.redirect("/");
   });
@@ -46,9 +56,10 @@ router.get("/urls/preview", async (req, res) =>{
             </div>
             </div>
         `
-
+        
+        const safeHTML = escapeHTML(previewHTML.toString());
         res.type("html");
-        res.send(previewHTML);
+        res.send(safeHTML);
 
     } catch(error) {
         res.status(500).send("Error fetching or parsing URL");

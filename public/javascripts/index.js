@@ -14,3 +14,4 @@ async function previewUrl(){
 function displayPreviews(previewHTML){
     document.getElementById("url_previews").innerHTML = previewHTML;
 }
+

@@ -19,6 +19,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/v1', apiv1);
+app.use('/api/v2', apiv2);
 
 export default app;
