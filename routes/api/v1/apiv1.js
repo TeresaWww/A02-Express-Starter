@@ -4,16 +4,6 @@ import {parse} from "node-html-parser";
 
 const router = express.Router();
 
-const escapeHTML = str => String(str).replace(/[&<>'"]/g, 
-  tag => ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      "'": '&#39;',
-      '"': '&quot;'
-    }[tag]));
-
-
 router.get("/", (req, res) => {
     res.redirect("/");
   });

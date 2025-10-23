@@ -16,4 +16,10 @@ a {
   width:300px;
   margin:5px;
   border: solid 1px;
+  text-align: center;
+}
+
+p{
+  margin-top: 10px;
+  margin-bottom: 0;
 }
