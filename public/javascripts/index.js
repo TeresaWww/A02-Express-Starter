@@ -75,7 +75,6 @@ async function previewUrl(){
                 if(url == lastURLPreviewed){
                     document.getElementById("url_previews").innerHTML = previewHtml;
                 }
-                let
             }catch(error){
                 document.getElementById("url_previews").innerHTML = "There was an error: " + error;
             }

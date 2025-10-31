@@ -10,6 +10,8 @@ const escapeHTML = str => String(str).replace(/[&<>'"]/g,
       '"': '&quot;'
     }[tag]));
 
+    // https://info441-wi24.github.io/Assignment-Tests/innocent_page.html
+
 async function getURLPreview(url){
     const response = await fetch(url);
 
@@ -29,24 +31,26 @@ async function getURLPreview(url){
       ogTitle = html.querySelector("title")?.text|| url;
     }
 
-    let previewHTML = `
-        <div style="max-width: 300px; border: solid 1px; padding: 3px; text-align: center;">
-        <p ></p>
-        <a href="${ogUrl}" style="text-decoration: none; color: black;">
-            <p style="font-weight: bold; font-size: 1.5em; margin: 20px 0; word-wrap: break-word;"><strong>${ogTitle}</strong></p>
-            ${
-            ogImage
-                ? `<img src="${ogImage}" style="max-height: 200px; max-width: 270px;">`
-                : ""
-            }
+    const safeTitle = escapeHTML(ogTitle);
+    const safeDescription  = ogDescription ? escapeHTML(ogDescription) : '';
+    const safeUrl   = escapeHTML(ogUrl);
+    const safeDim   = (ogWidth && ogHeight) ? `${escapeHTML(ogWidth)} x ${escapeHTML(ogHeight)}` : '';
+  
+    const previewHTML = `
+      <div style="max-width:300px;border:1px solid #ccc;padding:8px;text-align:center">
+        <a href="${safeUrl}" style="text-decoration:none;color:black" target="_blank" rel="noopener noreferrer">
+          <p style="font-weight:bold;font-size:1.1em;margin:12px 0;word-wrap:break-word">
+            <strong>${safeTitle}</strong>
+          </p>
+          ${ogImage ? `<img src="${ogImage}" style="max-height:200px;max-width:270px" alt="">` : ""}
         </a>
         <div>
-            ${ogWidth && ogHeight ? `<p style="margin: 10px 0;">${ogWidth} x ${ogHeight}</p>` : ""}
-            ${ogDescription ? `<p style="margin: 10px 0;">${ogDescription}</p>` : ""}
+          ${safeDim ? `<p style="margin:10px 0">${safeDim}</p>` : ""}
+          ${safeDescription ? `<p style="margin:10px 0">${safeDescription}</p>` : ""}
         </div>
-        </div>
-    `
-    return(previewHTML);
+      </div>
+    `;
+    return previewHTML;
 }
 
 export default getURLPreview;

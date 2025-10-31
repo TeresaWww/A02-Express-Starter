@@ -47,9 +47,8 @@ router.get("/urls/preview", async (req, res) =>{
             </div>
         `
         
-        const safeHTML = escapeHTML(previewHTML.toString());
         res.type("html");
-        res.send(safeHTML);
+        res.send(previewHTML);
 
     } catch(error) {
         res.status(500).send("Error fetching or parsing URL");
