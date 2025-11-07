@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
         const newPost = new req.models.Post({
             url: req.body.url,
             description: req.body.description,
-            username: req.body.account,
+            username: req.session.account.username,
             created_date: new Date()
         })
 
