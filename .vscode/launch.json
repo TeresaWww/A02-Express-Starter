@@ -15,7 +15,9 @@
             "cwd": "${workspaceFolder}",
             "runtimeExecutable": "npm",
             "runtimeArgs": [ "start" ],
-            "env": { "DEBUG": "express:* express-starter:server" },
+            "env": { "DEBUG": "express:* express-starter:server",
+                    "DB_PASSWORD": "pa55w0rd",
+                    "DB_USER_NAME": "user1" },
             "console": "integratedTerminal"
         }
     ]
