@@ -28,9 +28,9 @@ app.use((req, _res, next) => {
 
 const authConfig = {
     auth: {
-        clientId: "9e6b9f75-6fef-4d77-8aea-f87a151aa68b",
+        clientId: "e606b15e-1cc8-4696-9fc9-be5eb5b8a897",
         authority: "https://login.microsoftonline.com/f6b6dd5b-f02f-441a-99a0-162ac5060bd2",
-        clientSecret: "qjO8Q~KYnnZitUaMTWeomtnBikQkXNscqW-bUdqw",
+        clientSecret: "cpN8Q~reqBAeAFat5Y6ZOJGzbySWTWbNsc2fobx1",
         redirectUri: "/redirect"
     },
 	system: {
