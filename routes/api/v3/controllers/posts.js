@@ -37,14 +37,19 @@ router.get("/", async (req, res) => {
 
     const Post = req.models.Post;
 
-    const posts = await Post.find(filter, { description: 1, url: 1, username: 1 })
-                            .sort({ createdAt: -1 });
+    const posts = await Post.find(filter, { description: 1, url: 1, username: 1, likes: 1}).sort({ createdAt: -1 });
 
     const postData = await Promise.all(
       posts.map(async (post) => {
         try {
           const html = await getURLPreview(post.url);
-          return { description: post.description ?? "", htmlPreview: html , username: post.username ?? "Anonymous"};
+          return { 
+            id: post._id,
+            url: post.url,
+            description: post.description ?? "", 
+            htmlPreview: html , 
+            username: post.username ?? "Anonymous",
+            likes: post.likes ?? []};
         } catch (err) {
           return { description: post.description ?? "", htmlPreview: `Preview error: ${String(err.message || err)}` };
         }
@@ -57,5 +62,73 @@ router.get("/", async (req, res) => {
     return res.status(500).json({ status: "error", error: String(error) });
   }
 });
+
+
+router.post("/like", async (req, res) => {
+  try {
+    const session = req.session;
+    if (!session || !session.isAuthenticated) {
+      return res.status(401).json({ status: "error", error: "not logged in" });
+    }
+
+    const username = session.account.username;
+    const { postID } = req.body;
+
+    const Post = req.models.Post;
+    const post = await Post.findById(postID);
+
+    if (!post) {
+      return res.status(404).json({ status: "error", error: "post not found" });
+    }
+
+    if (!Array.isArray(post.likes)) {
+      post.likes = [];
+    }
+
+    if (!post.likes.includes(username)) {
+      post.likes.push(username);
+      await post.save();
+      console.log(`User ${username} liked post ${postID}`);
+    }
+
+    console.log(post.likes);
+    return res.json({ status: "success" , likes: post.likes});
+  } catch (error) {
+    console.error("Error liking post: ", error);
+    return res.status(500).json({ status: "error", error });
+  }
+});
+
+
+
+router.post("/unlike", async (req, res) => {
+  try {
+    const session = req.session;
+    if (!session || !session.isAuthenticated) {
+      return res.status(401).json({ status: "error", error: "not logged in" });
+    }
+
+    const username = session.account.username;
+    const { postID } = req.body;
+
+    const Post = req.models.Post;
+    const post = await Post.findById(postID);
+
+    if (!post) {
+      return res.status(404).json({ status: "error", error: "post not found" });
+    }
+
+    if (Array.isArray(post.likes) && post.likes.includes(username)) {
+      post.likes = post.likes.filter((u) => u !== username);
+      await post.save();
+    }
+
+    return res.json({ status: "success" });
+  } catch (error) {
+    console.error("Error unliking post: ", error);
+    return res.status(500).json({ status: "error", error });
+  }
+});
+
 
 export default router;

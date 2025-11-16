@@ -6,9 +6,6 @@ import models from "./models.js";
 import session from 'express-session';
 import WebAppAuthProvider from 'msal-node-wrapper'
 
-
-// import apiv1 from './routes/api/v1/apiv1.js';
-// import apiv2 from './routes/api/v2/apiv2.js';
 import apiv3 from './routes/api/v3/apiv3.js';
 
 
