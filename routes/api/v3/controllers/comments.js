@@ -15,10 +15,12 @@ router.get("/", async (req, res) => {
   
       const Comment = req.models.Comment;
 
-      const comments = await Comment.find({ post: postID, created_date: 1 });
-
+      const comments = await Comment.find({ post: postID }).lean();
+      
       comments.forEach(c => {
-        c.created_date = c.created_date.toLocaleString();
+        if (c.created_date) {
+          c.created_date = new Date(c.created_date).toLocaleString();
+        }
       });
   
       return res.json(comments);

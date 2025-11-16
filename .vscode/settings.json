@@ -3,5 +3,7 @@
     "appService.zipIgnorePattern": [
         "node_modules{,/**}",
         ".vscode{,/**}"
-    ]
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/318a1b35-427f-4cd2-b871-c28645ebb254/resourceGroups/web-sharer_group/providers/Microsoft.Web/sites/a6-websharer",
+    "appService.deploySubpath": "."
 }
