@@ -37,7 +37,7 @@ router.get("/", async (req, res) => {
 
     const Post = req.models.Post;
 
-    const posts = await Post.find(filter, { description: 1, url: 1, username: 1, likes: 1}).sort({ createdAt: -1 });
+    const posts = await Post.find(filter, { description: 1, url: 1, username: 1, likes: 1, created_date: 1 }).sort({ created_date: -1 });
 
     const postData = await Promise.all(
       posts.map(async (post) => {
@@ -49,7 +49,9 @@ router.get("/", async (req, res) => {
             description: post.description ?? "", 
             htmlPreview: html , 
             username: post.username ?? "Anonymous",
-            likes: post.likes ?? []};
+            likes: post.likes ?? [],
+            created_date: post.created_date.toLocaleString()
+          };
         } catch (err) {
           return { description: post.description ?? "", htmlPreview: `Preview error: ${String(err.message || err)}` };
         }
@@ -129,6 +131,5 @@ router.post("/unlike", async (req, res) => {
     return res.status(500).json({ status: "error", error });
   }
 });
-
 
 export default router;
