@@ -132,4 +132,46 @@ router.post("/unlike", async (req, res) => {
   }
 });
 
+
+router.delete("/", async (req, res) => {
+  try {
+    const session = req.session;
+    if (!session || !session.isAuthenticated) {
+      return res.status(401).json({ status: "error", error: "not logged in" });
+    }
+
+    const username = session.account.username;
+    const { postID } = req.body;
+
+    const Post = req.models.Post;
+    const Comment = req.models.Comment;
+
+    const post = await Post.findById(postID);
+
+    if (!post) {
+      return res.status(404).json({ status: "error", error: "post not found" });
+    }
+
+    if (post.username !== username) {
+      return res.status(401).json({
+        status: "error",
+        error: "you can only delete your own posts",
+      });
+    }
+
+    await Comment.deleteMany({ post: postID });
+
+    await Post.deleteOne({ _id: postID });
+
+    return res.json({ status: "success" });
+  } catch (error) {
+    console.error("DELETE /api/v3/posts error:", error);
+    return res.status(500).json({ status: "error", error });
+  }
+});
+
+
+
+
+
 export default router;
