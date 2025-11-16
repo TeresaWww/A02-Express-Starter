@@ -31,10 +31,6 @@ router.get("/", async (req, res) => {
     const { username } = req.query;
     const filter = username ? { username } : {};
 
-    if (!req.models || !req.models.Post) {
-      return res.status(500).json({ status: "error", error: "Post model missing (req.models not attached)" });
-    }
-
     const Post = req.models.Post;
 
     const posts = await Post.find(filter, { description: 1, url: 1, username: 1, likes: 1, created_date: 1 }).sort({ created_date: -1 });
@@ -60,7 +56,7 @@ router.get("/", async (req, res) => {
 
     return res.json(postData);
   } catch (error) {
-    console.error("GET /api/v3/posts error:", error);
+    console.error("GET posts error:", error);
     return res.status(500).json({ status: "error", error: String(error) });
   }
 });
@@ -165,13 +161,9 @@ router.delete("/", async (req, res) => {
 
     return res.json({ status: "success" });
   } catch (error) {
-    console.error("DELETE /api/v3/posts error:", error);
+    console.error("DELETE posts error:", error);
     return res.status(500).json({ status: "error", error });
   }
 });
-
-
-
-
 
 export default router;

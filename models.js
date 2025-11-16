@@ -17,6 +17,7 @@ const postSchema = new mongoose.Schema({
 
 models.Post = mongoose.model('Post', postSchema)
 
+
 const commentSchema = new mongoose.Schema({
     username: String,
     comment: String,
