@@ -21,7 +21,6 @@ models.Post = mongoose.model('Post', postSchema)
 const commentSchema = new mongoose.Schema({
     username: String,
     comment: String,
-    username: String,
     post: mongoose.Schema.Types.ObjectId,
     created_date: Date
 })

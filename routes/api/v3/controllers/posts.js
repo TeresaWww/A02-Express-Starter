@@ -29,11 +29,11 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const { username } = req.query;
-    const filter = username ? { username } : {};
+    const filter = username ? { username } : {}; // add all existing posts for all users
 
     const Post = req.models.Post;
 
-    const posts = await Post.find(filter, { description: 1, url: 1, username: 1, likes: 1, created_date: 1 }).sort({ created_date: -1 });
+    const posts = await Post.find(filter).sort({ created_date: -1 });
 
     const postData = await Promise.all(
       posts.map(async (post) => {
