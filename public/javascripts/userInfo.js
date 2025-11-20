@@ -4,8 +4,19 @@ async function init(){
 }
 
 async function saveUserInfo(){
-    //TODO: do an ajax call to save whatever info you want about the user from the user table
-    //see postComment() in the index.js file as an example of how to do this
+    const grade = document.getElementById("gradeSelect").value;
+
+    await fetchJSON(`api/${apiVersion}/userinfo`, {
+        method: "POST",
+        body: { grade }
+    });
+
+    document.getElementById("display-grade").innerText =  grade ? grade : "(not set)";
+
+
+    const status = document.getElementById("save-status");
+    status.innerText = "Saved!";
+    console.log("Info saved!");
 }
 
 async function loadUserInfo(){
@@ -20,7 +31,14 @@ async function loadUserInfo(){
         document.getElementById("user_info_new_div").classList.add("d-none");
     }
     
-    //TODO: do an ajax call to load whatever info you want about the user from the user table
+    const info = await fetchJSON(`api/${apiVersion}/userinfo?username=${encodeURIComponent(username)}`);
+
+    document.getElementById("display-grade").innerText =
+        info && info.grade ? info.grade : "(not set)";
+
+    if (username === myIdentity && info && info.grade) {
+        document.getElementById("gradeSelect").value = info.grade;
+    }
 
     loadUserInfoPosts(username)
 }

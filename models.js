@@ -27,6 +27,13 @@ const commentSchema = new mongoose.Schema({
 
 models.Comment = mongoose.model('Comment', commentSchema)
 
+const userSchema = new mongoose.Schema({
+    username: String,
+    grade: String, // freshman, sophomore, junior, senior
+})
+
+models.User = mongoose.model('User', userSchema)
+
 console.log('mongoose models created')
 
 export default models;

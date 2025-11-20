@@ -5,11 +5,12 @@ import postsRouter from './controllers/posts.js';
 import urlsRouter from './controllers/urls.js';
 import usersRouter from './controllers/users.js';
 import commentRouter from './controllers/comments.js';
+import userInfoRouter from "./controllers/userInfo.js";
 
 router.use('/posts', postsRouter);
 router.use('/urls', urlsRouter);
 router.use('/users', usersRouter);
 router.use('/comments', commentRouter);
-
+router.use("/userinfo", userInfoRouter);
 
 export default router;

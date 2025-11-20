@@ -20,14 +20,23 @@
   
   <h2>Info for user: <span id="username-span"></span></h2>
   <div id="user_info_div">
-    TODO: For A7, show user info here (loadUserInfo function in userInfo.js)
+    <p><b>Grade:</b> <span id="display-grade"></span></p>
   </div>
   <br>
   <div id="user_info_new_div" class="d-none">
     <h3>Update User Info:</h3>
-    TODO: For A7, add input fields here here (saveUserInfo function in userInfo.js)
-    <br>
-    <button onclick="saveUserInfo()">Save User Info</button>
+  
+    <label for="gradeSelect"><b>Your Grade:</b></label>
+    <select id="gradeSelect">
+      <option value="">Select grade...</option>
+      <option value="freshman">Freshman</option>
+      <option value="sophomore">Sophomore</option>
+      <option value="junior">Junior</option>
+      <option value="senior">Senior</option>
+    </select>
+  
+    <br><br>
+    <button onclick="saveUserInfo()">Save</button>
   </div>
   <br><br>
   <h2>All Posts</h2>
